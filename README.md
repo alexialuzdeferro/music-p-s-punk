@@ -10,13 +10,13 @@
 ​<p>
 
 
-<img src="https://www.google.com/search?q=https://img.shields.io/badge/EST%C3%89TICA-G%C3%93TICA-4a0404%3Fstyle%3Dfor-the-badge" />
+<img src="https://www.google.com/search?q=https://img.shields.io/badge/EST%25C3%2589TICA-G%25C3%2593TICA-4a0404%3Fstyle%3Dfor-the-badge" alt="Estética Gótica" />
 
 
-<img src="https://www.google.com/search?q=https://img.shields.io/badge/SINFONIA-DARKWAVE-2d004d%3Fstyle%3Dfor-the-badge" />
+<img src="https://www.google.com/search?q=https://img.shields.io/badge/SINFONIA-DARKWAVE-2d004d%3Fstyle%3Dfor-the-badge" alt="Sinfonia Darkwave" />
 
 
-<img src="https://www.google.com/search?q=https://img.shields.io/badge/STATUS-VIVO-8a0000%3Fstyle%3Dfor-the-badge" />
+<img src="https://www.google.com/search?q=https://img.shields.io/badge/STATUS-VIVO-8a0000%3Fstyle%3Dfor-the-badge" alt="Status Vivo" />
 
 
 </p>
@@ -43,7 +43,7 @@
 ​🌑 Sobre o Projeto
 
 
-​Vampire Waves (também conhecido como Nocturne Player) é uma experiência audiovisual imersiva. Não é apenas um player de música, é um portal para uma atmosfera densa de Post-Punk, Darkwave e Synthpop.
+​Vampire Waves (anteriormente Nocturne Player) é uma experiência audiovisual imersiva. Não é apenas um player de música, é um portal para uma atmosfera densa de Post-Punk, Darkwave e Synthpop.
 
 
 ​Desenvolvido para capturar a essência da subcultura gótica, o aplicativo apresenta uma interface banhada em tons de sangue, roxo profundo e escuridão, com efeitos visuais de CRT (TV antiga) e iluminação ambiente.
