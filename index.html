@@ -9,7 +9,7 @@
     <!-- React & ReactDOM -->
     <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-    <!-- Babel para compilar JSX no navegador -->
+    <!-- Babel para compilar JSX -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     
     <style>
@@ -24,7 +24,7 @@
         ::-webkit-scrollbar-thumb { background: #4a0404; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #8a0000; }
 
-        /* Efeito de TV Antiga (CRT) */
+        /* CRT Effect */
         .crt-overlay {
             background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
                         linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
@@ -40,29 +40,19 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState, useEffect } = React;
+        const { useState, useEffect, useRef } = React;
 
-        // Ícones SVG embutidos para não depender de bibliotecas externas
-        const Disc = ({ className }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
-        );
-        const SkipBack = ({ className }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5"/></svg>
-        );
-        const SkipForward = ({ className }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
-        );
-        const Music = ({ className }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-        );
-        const Volume2 = ({ className }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
-        );
-        const Heart = ({ className }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        );
+        // Ícones
+        const Disc = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>;
+        const SkipBack = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5"/></svg>;
+        const SkipForward = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg>;
+        const Music = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>;
+        const Volume2 = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>;
+        const Heart = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>;
+        const Repeat = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>;
 
         const videos = [
+          { id: '-HeCgOiirV4', title: 'Ritual Inicial' },
           { id: 'tBpQ1f77PDA', title: 'The Perfect Girl' },
           { id: 'h4Jnv-pb6sk', title: 'Silhouette' },
           { id: 'A_ZJnKoMoBA', title: 'After Dark' },
@@ -85,27 +75,95 @@
         function App() {
           const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
           const [isPlaying, setIsPlaying] = useState(false);
+          const [isAutoPlay, setIsAutoPlay] = useState(false);
+          const playerRef = useRef(null);
+          const playerContainerRef = useRef(null);
+          
+          // Referências para o callback do YouTube API (que roda fora do React loop)
+          const isAutoPlayRef = useRef(isAutoPlay);
+          const currentVideoIndexRef = useRef(currentVideoIndex);
+
+          useEffect(() => {
+            isAutoPlayRef.current = isAutoPlay;
+            currentVideoIndexRef.current = currentVideoIndex;
+          }, [isAutoPlay, currentVideoIndex]);
+
+          // Carregar API do YouTube
+          useEffect(() => {
+            if (!window.YT) {
+              const tag = document.createElement('script');
+              tag.src = "https://www.youtube.com/iframe_api";
+              const firstScriptTag = document.getElementsByTagName('script')[0];
+              firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+            }
+
+            window.onYouTubeIframeAPIReady = () => {
+              playerRef.current = new window.YT.Player('youtube-player', {
+                height: '100%',
+                width: '100%',
+                videoId: videos[0].id,
+                playerVars: {
+                  'autoplay': 0,
+                  'controls': 1,
+                  'rel': 0,
+                  'fs': 1,
+                  'modestbranding': 1,
+                  'playsinline': 1 
+                },
+                events: {
+                  'onStateChange': onPlayerStateChange
+                }
+              });
+            };
+          }, []);
+
+          // Atualizar vídeo quando o índice muda
+          useEffect(() => {
+            if (playerRef.current && playerRef.current.loadVideoById) {
+              playerRef.current.loadVideoById(videos[currentVideoIndex].id);
+              setIsPlaying(true);
+            }
+          }, [currentVideoIndex]);
+
+          const onPlayerStateChange = (event) => {
+             // YT.PlayerState.ENDED é 0
+             if (event.data === 0) {
+               setIsPlaying(false);
+               if (isAutoPlayRef.current) {
+                 const nextIndex = (currentVideoIndexRef.current + 1) % videos.length;
+                 setCurrentVideoIndex(nextIndex);
+               }
+             } else if (event.data === 1) { // PLAYING
+               setIsPlaying(true);
+             } else if (event.data === 2) { // PAUSED
+               setIsPlaying(false);
+             }
+          };
 
           const handleVideoSelect = (index) => {
             setCurrentVideoIndex(index);
-            setIsPlaying(true);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // No mobile, rolar suavemente até o player
+            if (window.innerWidth < 1024 && playerContainerRef.current) {
+                playerContainerRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
           };
 
           const handleNext = () => {
             setCurrentVideoIndex((prev) => (prev + 1) % videos.length);
-            setIsPlaying(true);
           };
 
           const handlePrev = () => {
             setCurrentVideoIndex((prev) => (prev - 1 + videos.length) % videos.length);
-            setIsPlaying(true);
+          };
+
+          const toggleAutoPlay = () => {
+            setIsAutoPlay(!isAutoPlay);
           };
 
           const currentVideo = videos[currentVideoIndex];
 
           return (
-            <div className="min-h-screen">
+            <div className="min-h-screen pb-10">
               
               {/* Background Ambience */}
               <div className="fixed inset-0 pointer-events-none z-0">
@@ -131,58 +189,71 @@
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
                   
                   {/* Video Player */}
-                  <div className="lg:col-span-2 space-y-4">
+                  <div className="lg:col-span-2 space-y-4" ref={playerContainerRef}>
                     <div className="relative w-full aspect-video bg-black rounded-sm border-2 border-[#2d0a1e] shadow-[0_0_30px_rgba(45,0,20,0.6)] overflow-hidden group">
-                      <iframe
-                        className="w-full h-full object-cover"
-                        src={`https://www.youtube.com/embed/${currentVideo.id}?autoplay=1&rel=0&modestbranding=1`}
-                        title="YouTube video player"
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      ></iframe>
+                      {/* Container para API do YouTube */}
+                      <div id="youtube-player" className="w-full h-full"></div>
                       <div className="absolute inset-0 border-[1px] border-[#ffffff10] pointer-events-none"></div>
                     </div>
 
                     {/* Now Playing Info */}
-                    <div className="bg-[#0f0205] border border-[#2e0212] p-6 rounded-sm shadow-lg flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div className="bg-[#0f0205] border border-[#2e0212] p-4 md:p-6 rounded-sm shadow-lg flex flex-col gap-4">
+                      
+                      {/* Info & Spinner */}
                       <div className="flex items-center gap-4 w-full">
                         <div className={`p-3 rounded-full bg-[#1a0505] border border-[#3d0a0a] ${isPlaying ? 'animate-spin-slow' : ''}`}>
                           <Disc className="w-6 h-6 text-[#ff0033]" />
                         </div>
-                        <div className="overflow-hidden">
-                          <h2 className="serif-font text-2xl text-[#decbcb] truncate">{currentVideo.title || `Track ${currentVideoIndex + 1}`}</h2>
-                          <p className="text-xs text-[#804d5e] uppercase tracking-widest">Reproduzindo Agora</p>
+                        <div className="overflow-hidden flex-1">
+                          <h2 className="serif-font text-xl md:text-2xl text-[#decbcb] truncate">{currentVideo.title}</h2>
+                          <p className="text-xs text-[#804d5e] uppercase tracking-widest">
+                             {isPlaying ? 'Reproduzindo Agora' : 'Pausado'}
+                          </p>
                         </div>
                       </div>
-                      
-                      {/* Controls */}
-                      <div className="flex items-center gap-4">
+
+                      {/* Controls Row */}
+                      <div className="flex items-center justify-between border-t border-[#2e0212] pt-4">
+                         {/* Toggle Autoplay */}
                         <button 
-                          onClick={handlePrev}
-                          className="p-3 text-[#5e2d3e] hover:text-[#ff0033] transition-colors hover:bg-[#1a0505] rounded-full"
+                          onClick={toggleAutoPlay}
+                          className={`flex items-center gap-2 px-3 py-1 rounded-sm text-xs uppercase tracking-wider transition-all
+                            ${isAutoPlay 
+                              ? 'bg-[#2d0a1e] text-[#b026ff] border border-[#b026ff]/30 shadow-[0_0_10px_rgba(176,38,255,0.2)]' 
+                              : 'text-[#5c3a4a] hover:text-[#a0a0a0]'}
+                          `}
                         >
-                          <SkipBack className="w-6 h-6" />
+                          <Repeat className="w-3 h-3" />
+                          {isAutoPlay ? 'Sessão Contínua: ON' : 'Tocar Todas: OFF'}
                         </button>
-                        <div className="w-px h-8 bg-[#2e0212]"></div>
-                        <button 
-                          onClick={handleNext}
-                          className="p-3 text-[#5e2d3e] hover:text-[#ff0033] transition-colors hover:bg-[#1a0505] rounded-full"
-                        >
-                          <SkipForward className="w-6 h-6" />
-                        </button>
+
+                        <div className="flex items-center gap-4">
+                            <button 
+                            onClick={handlePrev}
+                            className="p-3 text-[#5e2d3e] hover:text-[#ff0033] transition-colors hover:bg-[#1a0505] rounded-full"
+                            >
+                            <SkipBack className="w-6 h-6" />
+                            </button>
+                            <div className="w-px h-6 bg-[#2e0212]"></div>
+                            <button 
+                            onClick={handleNext}
+                            className="p-3 text-[#5e2d3e] hover:text-[#ff0033] transition-colors hover:bg-[#1a0505] rounded-full"
+                            >
+                            <SkipForward className="w-6 h-6" />
+                            </button>
+                        </div>
                       </div>
                     </div>
                   </div>
 
                   {/* Playlist Sidebar */}
                   <div className="lg:col-span-1">
-                    <div className="bg-[#0a0103]/80 backdrop-blur-sm border border-[#2e0212] h-[600px] flex flex-col rounded-sm">
+                    <div className="bg-[#0a0103]/80 backdrop-blur-sm border border-[#2e0212] h-[500px] lg:h-[600px] flex flex-col rounded-sm">
                       <div className="p-4 border-b border-[#2e0212] bg-[#120205]">
                         <h3 className="gothic-font text-xl text-[#b026ff] flex items-center gap-2">
                           <Music className="w-4 h-4" /> Playlist Gótica
                         </h3>
-                        <p className="text-xs text-gray-500 mt-1">{videos.length} Faixas Encontradas</p>
+                        <p className="text-xs text-gray-500 mt-1">{videos.length} Faixas • Clique para tocar</p>
                       </div>
                       
                       <div className="overflow-y-auto flex-1 p-2 space-y-2">
@@ -212,10 +283,10 @@
                             
                             <div className="flex-1 min-w-0">
                               <p className={`serif-font text-sm truncate ${currentVideoIndex === index ? 'text-[#ffb3c1]' : 'text-[#a0a0a0] group-hover:text-[#decbcb]'}`}>
-                                {video.title || `Ritual ${index + 1}`}
+                                {video.title}
                               </p>
                               <p className="text-[10px] text-[#5c3a4a] uppercase tracking-wider group-hover:text-[#b026ff] transition-colors">
-                                {currentVideoIndex === index ? 'Tocando...' : 'Assistir'}
+                                {currentVideoIndex === index ? 'Tocando...' : `Faixa ${index + 1}`}
                               </p>
                             </div>
                           </div>
